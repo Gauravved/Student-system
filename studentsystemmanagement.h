@@ -253,7 +253,7 @@ void cancel(int n)
 void sortt()
 {
 	int c;
-	printf("Sort by:\n1> Roll \n2> Subject 1 \n3> Subject 2 \n4> Subject 3\nEnter your choice:");
+	printf("Sort by:\n1> Roll \n2> Subject 1 \n3> Subject 2 \n4> Subject 3 \n5>Name \nEnter your choice:");
 	scanf("%d",&c);
 	switch(c)
 	{
@@ -269,6 +269,11 @@ void sortt()
 		case 4:
 			s2sort();
 			break;
+		case 5:
+			nsort();
+			break;
+		default:
+			printf("Invailid choice:");
 	}
 }
 void rsort()
@@ -484,6 +489,90 @@ void s2sort()
 					ptr=j;
 					ptr->addr=temp;
 					ptr=temp;
+				}
+			}
+			temp=max;
+		}
+		curr=curr->addr;
+	}
+}
+void nsort()
+{
+	int k=0,m;
+	struct Node *ptr;
+	curr=start;
+	ptr=start;
+	while(curr!=NULL)
+	{
+		temp=curr->addr;
+		while(temp!=NULL)
+		{
+			ptr=start;
+			max=temp->addr;
+			for(i=0;i<15;i++)
+			{
+				if(temp->name[i] < curr->name[i])
+				{
+					if(curr==start)
+					{
+						m=curr;
+						while(curr->addr!=temp)
+						{
+							curr=curr->addr;
+						}
+						curr->addr=temp->addr;
+						curr=m;
+						temp->addr=curr;
+						start=temp;
+						curr=start;	
+					}
+					else
+					{
+						m=curr;
+						while(curr->addr!=temp)
+						{
+							curr=curr->addr;
+						}      
+						curr->addr=temp->addr;
+						curr=m;
+						for(j=0;j<15;j++)
+						{
+							if(ptr->name[i] < temp->name[i])
+							{
+								j=ptr;
+								ptr=ptr->addr;
+								k=1;
+							}
+							else if(ptr->name[i] > temp->name[i])
+							{
+								k=0; 
+								break;
+							}
+						}
+						if(k==1)
+						{
+							temp->addr=ptr;
+							ptr=j;
+							ptr->addr=temp;
+							ptr=temp;	
+						}
+						else if(k!=1)
+						{
+							ptr=start;
+							while(ptr->addr!=curr)
+							{
+								ptr=ptr->addr;
+							}
+							temp->addr=curr;
+							ptr->addr=temp;
+							ptr=temp;
+						}	
+					}
+					break;
+				}
+				else if (curr->name[i] <temp->name[i])
+				{
+					break;
 				}
 			}
 			temp=max;
